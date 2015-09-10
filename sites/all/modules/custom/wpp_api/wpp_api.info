@@ -1,0 +1,7 @@
+name = WPP API
+description = This module is created for custom API.
+
+dependencies[] = services
+
+package = WPP
+core = 7.x

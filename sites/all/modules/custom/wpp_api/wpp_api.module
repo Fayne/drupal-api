@@ -1,0 +1,141 @@
+<?php
+/**
+ * Implements of hook_services_resources().
+ */
+function wpp_api_services_resources()
+{
+    $api = array(
+        'gallery' => array(
+            'operations' => array(
+                'retrieve' => array(
+                    'help' => 'Retrieves posted gallery',
+                    'callback' => '_wpp_api_gallery_retrieve',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'nid',
+                            'optional' => false,
+                            'source' => array('path' => 0),
+                            'type' => 'int',
+                            'description' => 'The nid of the node to get',
+                        ),
+                    ),
+                ),
+                'index' => array(
+                    'help' => 'list posted gallery',
+                    'callback' => '_wpp_api_gallery_list',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'args' => array(),
+                ),
+            ),
+        ),
+    );
+
+    return $api;
+}
+
+/**
+ * Callback function for gallery retrieve
+ * @param null $nid
+ * @return array
+ */
+function _wpp_api_gallery_retrieve($nid = null)
+{
+
+    $gallery = node_load($nid);
+
+    return _wpp_api_output_gallery($gallery);
+
+}
+
+/**
+ * Callback function for gallery list
+ *
+ * @return array
+ */
+function _wpp_api_gallery_list()
+{
+    $galleryList = node_load_multiple(array(), array('type' => 'article'));
+
+    return _wpp_api_output_gallery_list($galleryList);
+}
+
+/**
+ * Get gallery post
+ * @param object $gallery
+ * @return array
+ */
+function _wpp_api_output_gallery($gallery)
+{
+    $galleryAPI = new stdClass();
+
+    $galleryAPI->title = $gallery->title;
+    $galleryAPI->subtitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
+    $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
+    $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
+    $galleryAPI->video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '';
+    $galleryAPI->published = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
+
+    return $galleryAPI;
+}
+
+/**
+ * Get gallery posts
+ * @param array $galleryList
+ * @return array
+ */
+function _wpp_api_output_gallery_list($galleryList = array())
+{
+    $galleryListAPI = array();
+
+    foreach ($galleryList as $gallery) {
+        $galleryAPI = new stdClass();
+
+        $galleryAPI->title = $gallery->title;
+        $galleryAPI->subtitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
+        $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
+        $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
+        $galleryAPI->video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '';
+        $galleryAPI->published = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
+
+        array_push($galleryListAPI, $galleryAPI);
+    }
+
+    return $galleryListAPI;
+}
+
+/**
+ * Determine whether the current user can access a node resource.
+ *
+ * @param $op
+ *   One of view, update, create, delete per node_access().
+ * @param $args
+ *   Resource arguments passed through from the original request.
+ * @return bool
+ *
+ * @see node_access()
+ */
+function _wpp_api_node_resource_access($op = 'view', $args = array())
+{
+    return true;
+}
+
+/**
+ * Get term name by given tid
+ *
+ * @param int $tid
+ * @return string mixed
+ */
+function _get_term_name_by_id($tid)
+{
+    $taxonomyTerm = taxonomy_term_load($tid);
+
+    return $taxonomyTerm->name;
+}
