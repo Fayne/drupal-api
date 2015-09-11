@@ -9,8 +9,8 @@ set :branch, 'develop'
 
 set :app_environment, 'staging'
 
-# SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
-# SSHKit.config.command_map[:drush] = "#{shared_path.join("vendor/bin/drush")}"
+SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
+SSHKit.config.command_map[:drush] = "#{shared_path.join("vendor/bin/drush")}"
 
 set :file_permissions_paths, ["sites/default/files"]
 set :file_permissions_users, ["ubuntu"]

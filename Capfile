@@ -5,10 +5,10 @@ require 'capistrano/setup'
 require 'capistrano/deploy'
 
 # drupal deployment
-# require 'capistrano/drupal-deploy'
-# require 'capistrano/composer'
+require 'capistrano/drupal-deploy'
+require 'capistrano/composer'
 
-require 'capistrano/file-permissions'
+# require 'capistrano/file-permissions'
 
 # Include tasks from other gems included in your Gemfile
 #

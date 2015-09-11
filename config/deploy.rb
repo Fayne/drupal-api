@@ -36,6 +36,16 @@ set :linked_dirs, fetch(:linked_dirs, []).push('sites/default/files', 'sites/def
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+# Remove default composer install task on deploy:updated
+Rake::Task['deploy:updated'].prerequisites.delete('composer:install')
+
+# Map composer and drush commands
+# NOTE: If stage have different deploy_to
+# you have to copy those line for each <stage_name>.rb
+# See https://github.com/capistrano/composer/issues/22
+SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
+SSHKit.config.command_map[:drush] = "#{shared_path.join("vendor/bin/drush")}"
+
 namespace :deploy do
 
   task :upload_setting do
