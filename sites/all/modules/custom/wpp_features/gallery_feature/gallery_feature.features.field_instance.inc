@@ -51,7 +51,7 @@ function gallery_feature_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 2,
+      'weight' => 7,
     ),
   );
 
@@ -182,7 +182,7 @@ function gallery_feature_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_published',
-    'label' => 'Publish date',
+    'label' => 'Published date',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -195,7 +195,7 @@ function gallery_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 3,
     ),
   );
 
@@ -222,7 +222,7 @@ function gallery_feature_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_subtitle',
-    'label' => 'subtitle',
+    'label' => 'Sub Title',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -235,7 +235,7 @@ function gallery_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -272,7 +272,7 @@ function gallery_feature_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 8,
+      'weight' => 0,
     ),
   );
 
@@ -322,12 +322,12 @@ function gallery_feature_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Cover');
   t('Description');
-  t('Publish date');
+  t('Published date');
+  t('Sub Title');
   t('Thumbnail');
   t('Type');
   t('Upload an image to go with this article.');
   t('Video');
-  t('subtitle');
 
   return $field_instances;
 }
