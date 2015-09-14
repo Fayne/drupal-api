@@ -1,5 +1,5 @@
-name = Beacon type
-description = This is the feature for iBeacon API.
+name = Beacon content type feature
+description = This is the feature for beacon content type.
 core = 7.x
 package = Features
 version = 7.x-1.0

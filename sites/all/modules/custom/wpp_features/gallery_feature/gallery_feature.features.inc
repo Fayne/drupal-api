@@ -5,15 +5,6 @@
  */
 
 /**
- * Implements hook_ctools_plugin_api().
- */
-function gallery_feature_ctools_plugin_api($module = NULL, $api = NULL) {
-  if ($module == "services" && $api == "services") {
-    return array("version" => "3");
-  }
-}
-
-/**
  * Implements hook_node_info().
  */
 function gallery_feature_node_info() {
