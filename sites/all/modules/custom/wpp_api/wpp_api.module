@@ -49,6 +49,17 @@ function wpp_api_services_resources()
                 ),
             ),
         ),
+        'beacon' => array(
+            'operations' => array(
+                'index' => array(
+                    'help' => 'list beacons',
+                    'callback' => '_wpp_api_beacon_list',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'args' => array(),
+                ),
+            ),
+        ),
     );
 
     return $api;
@@ -82,6 +93,18 @@ function _wpp_api_gallery_list($offset, $limit)
     $galleryList = $limit ? array_slice($galleryList, $offset, $limit) : array_slice($galleryList, $offset);
 
     return _wpp_api_output_gallery_list($galleryList, $offset, $limit);
+}
+
+/**
+ * Callback function for beacon list
+ *
+ * @return mixed
+ */
+function _wpp_api_beacon_list()
+{
+    $beaconList = node_load_multiple(array(), array('type' => 'beacon'));
+
+    return _wpp_api_output_beacon_list($beaconList);
 }
 
 /**
@@ -140,6 +163,32 @@ function _wpp_api_output_gallery_list($galleryList = array())
     }
 
     return $galleryListAPI;
+}
+
+/**
+ * Get beacon list
+ *
+ * @param array $beaconList
+ * @return array
+ */
+function _wpp_api_output_beacon_list($beaconList = array())
+{
+    $beaconListAPI = array();
+
+    foreach ($beaconList as $beacon) {
+        $beaconAPI = new stdClass();
+
+        $beaconAPI->uuid = $beacon->field_uuid[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->name = $beacon->title;
+        $beaconAPI->major = $beacon->field_major[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->minor = $beacon->field_minor[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->distance = $beacon->field_distance[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->updateAt = $beacon->changed;
+
+        array_push($beaconListAPI, $beaconAPI);
+    }
+
+    return $beaconListAPI;
 }
 
 /**
