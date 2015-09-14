@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Constant
+ */
+define('WPP_API_GALLERY_TYPE', 'gallery');
+
 /**
  * Implements of hook_services_resources().
  */
@@ -183,6 +189,32 @@ function _wpp_api_output_beacon_list($beaconList = array())
         $beaconAPI->major = $beacon->field_major[LANGUAGE_NONE][0]['value'];
         $beaconAPI->minor = $beacon->field_minor[LANGUAGE_NONE][0]['value'];
         $beaconAPI->distance = $beacon->field_distance[LANGUAGE_NONE][0]['value'];
+
+        // check whether it has reference content
+        if ($contentId = isset($beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id']) ? $beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id'] : '') {
+            global $base_url;
+
+            // get the current endpoint path
+            $endpoints = services_endpoint_load_all();
+            $currentPath = '';
+
+            foreach ($endpoints as $endpoint) {
+                if (strpos(current_path(), $endpoint->path) === 0) {
+                    $currentPath = $endpoint->path;
+
+                    break;
+                }
+            }
+
+//            $content = node_load($contentId);
+
+            $beaconAPI->content = array(
+                'id' => $contentId,
+                'type' => node_type_get_name(node_load($contentId)),
+                'href' => $currentPath ? $base_url . '/' . $currentPath . '/' . WPP_API_GALLERY_TYPE . '/' . $contentId : "",
+            );
+        }
+
         $beaconAPI->updateAt = $beacon->changed;
 
         array_push($beaconListAPI, $beaconAPI);
