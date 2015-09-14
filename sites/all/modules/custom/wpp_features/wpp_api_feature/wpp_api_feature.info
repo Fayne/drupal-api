@@ -1,0 +1,11 @@
+name = WPP API feature
+description = This is the feature for WPP API settings.
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = services
+dependencies[] = wpp_api
+features[ctools][] = services:services:3
+features[features_api][] = api:2
+features[services_endpoint][] = api_v1

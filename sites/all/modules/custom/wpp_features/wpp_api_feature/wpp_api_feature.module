@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the WPP API feature feature.
+ */
+
+include_once 'wpp_api_feature.features.inc';
