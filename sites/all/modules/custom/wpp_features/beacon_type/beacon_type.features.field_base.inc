@@ -10,6 +10,39 @@
 function beacon_type_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_beacon_content'
+  $field_bases['field_beacon_content'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_beacon_content',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'target_id' => array(
+        0 => 'target_id',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'entityreference',
+    'settings' => array(
+      'handler' => 'base',
+      'handler_settings' => array(
+        'sort' => array(
+          'type' => 'none',
+        ),
+        'target_bundles' => array(
+          'article' => 'article',
+        ),
+      ),
+      'target_type' => 'node',
+    ),
+    'translatable' => 0,
+    'type' => 'entityreference',
+  );
+
   // Exported field_base: 'field_distance'
   $field_bases['field_distance'] = array(
     'active' => 1,
