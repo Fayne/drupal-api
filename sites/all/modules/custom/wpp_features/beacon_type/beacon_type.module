@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Beacon type feature.
+ */
+
+include_once 'beacon_type.features.inc';
