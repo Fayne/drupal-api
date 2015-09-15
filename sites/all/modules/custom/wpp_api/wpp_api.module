@@ -202,9 +202,9 @@ function _wpp_api_output_beacon_list($beaconList = array())
 
         $beaconAPI->uuid = $beacon->field_uuid[LANGUAGE_NONE][0]['value'];
         $beaconAPI->name = $beacon->title;
-        $beaconAPI->major = $beacon->field_major[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->minor = $beacon->field_minor[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->distance = $beacon->field_distance[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->major = (int)$beacon->field_major[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->minor = (int)$beacon->field_minor[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->distance = isset($beacon->field_distance[LANGUAGE_NONE][0]['value']) ? (int)$beacon->field_distance[LANGUAGE_NONE][0]['value'] : '';
 
         // check whether it has reference content
         if ($contentId = isset($beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id']) ? $beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id'] : '') {
