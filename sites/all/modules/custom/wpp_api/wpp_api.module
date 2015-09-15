@@ -225,7 +225,7 @@ function _wpp_api_output_beacon_list($beaconList = array())
 //            $content = node_load($contentId);
 
             $beaconAPI->content = array(
-                'id' => $contentId,
+                'id' => (int)$contentId,
                 'type' => WPP_API_GALLERY_TYPE,
                 'href' => $currentPath ? $base_url . '/' . $currentPath . '/' . WPP_API_GALLERY_TYPE . '/' . $contentId : "",
             );
