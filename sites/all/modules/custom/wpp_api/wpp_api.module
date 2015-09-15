@@ -122,7 +122,7 @@ function _wpp_api_output_gallery($gallery)
 {
     $galleryAPI = new stdClass();
 
-    $galleryAPI->id = $gallery->nid;
+    $galleryAPI->id = (int)$gallery->nid;
     $galleryAPI->title = $gallery->title;
     $galleryAPI->subTitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
     $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
