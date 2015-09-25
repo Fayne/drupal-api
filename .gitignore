@@ -8,3 +8,5 @@ sites/*/private
 .idea
 Gemfile
 Gemfile.lock
+
+.DS_Store
