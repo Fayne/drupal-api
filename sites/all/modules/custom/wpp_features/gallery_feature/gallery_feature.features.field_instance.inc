@@ -59,7 +59,7 @@ function gallery_feature_field_default_field_instances() {
   $field_instances['node-article-field_cover'] = array(
     'bundle' => 'article',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'The maximum size of cover image is 5MB.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -87,7 +87,7 @@ function gallery_feature_field_default_field_instances() {
       'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
+      'max_filesize' => '5 MB',
       'max_resolution' => '',
       'min_resolution' => '',
       'title_field' => 0,
@@ -109,7 +109,7 @@ function gallery_feature_field_default_field_instances() {
   $field_instances['node-article-field_image'] = array(
     'bundle' => 'article',
     'deleted' => 0,
-    'description' => 'Upload an image to go with this article.',
+    'description' => 'IOS 1242x512, Android 1440x594',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -141,9 +141,9 @@ function gallery_feature_field_default_field_instances() {
       'default_image' => 0,
       'file_directory' => 'field/image',
       'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
+      'max_filesize' => '500 KB',
+      'max_resolution' => '1440x594',
+      'min_resolution' => '1242x512',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -280,7 +280,7 @@ function gallery_feature_field_default_field_instances() {
   $field_instances['node-article-field_video'] = array(
     'bundle' => 'article',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'This maximum size of video is 10 MB.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -304,7 +304,7 @@ function gallery_feature_field_default_field_instances() {
       'description_field' => 0,
       'file_directory' => 'videos',
       'file_extensions' => 'mp4',
-      'max_filesize' => '',
+      'max_filesize' => '10 MB',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -322,11 +322,13 @@ function gallery_feature_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Cover');
   t('Description');
+  t('IOS 1242x512, Android 1440x594');
   t('Published date');
   t('Sub Title');
+  t('The maximum size of cover image is 5MB.');
+  t('This maximum size of video is 10 MB.');
   t('Thumbnail');
   t('Type');
-  t('Upload an image to go with this article.');
   t('Video');
 
   return $field_instances;
