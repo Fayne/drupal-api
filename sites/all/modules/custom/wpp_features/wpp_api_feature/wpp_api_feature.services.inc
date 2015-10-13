@@ -43,6 +43,14 @@ function wpp_api_feature_default_services_endpoint() {
         ),
       ),
     ),
+    'floor' => array(
+      'alias' => 'floors',
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'gallery' => array(
       'operations' => array(
         'retrieve' => array(
