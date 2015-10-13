@@ -1,0 +1,14 @@
+name = Floor logo content type feature
+description = This is the feature for floor logo content type.
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = image
+dependencies[] = number
+features[features_api][] = api:2
+features[field_base][] = field_floor_logo
+features[field_base][] = field_floor_number_reference
+features[field_instance][] = node-floor_logos-field_floor_logo
+features[field_instance][] = node-floor_logos-field_floor_number_reference
+features[node][] = floor_logos
