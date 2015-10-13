@@ -8,13 +8,17 @@ define('WPP_API_GALLERY_TYPE', 'gallery');
 /**
  * Implements of hook_services_resources().
  */
-function wpp_api_services_resources()
-{
+function wpp_api_services_resources() {
     $api = array(
         'gallery' => array(
             'operations' => array(
                 'retrieve' => array(
                     'help' => 'Retrieves posted gallery',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
                     'callback' => '_wpp_api_gallery_retrieve',
                     'access callback' => '_wpp_api_node_resource_access',
                     'access arguments' => array('view'),
@@ -22,7 +26,7 @@ function wpp_api_services_resources()
                     'args' => array(
                         array(
                             'name' => 'nid',
-                            'optional' => false,
+                            'optional' => FALSE,
                             'source' => array('path' => 0),
                             'type' => 'int',
                             'description' => 'The nid of the node to get',
@@ -31,6 +35,11 @@ function wpp_api_services_resources()
                 ),
                 'index' => array(
                     'help' => 'list posted gallery',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
                     'callback' => '_wpp_api_gallery_list',
                     'access callback' => '_wpp_api_node_resource_access',
                     'access arguments' => array('view'),
@@ -67,10 +76,40 @@ function wpp_api_services_resources()
             'operations' => array(
                 'index' => array(
                     'help' => 'list beacons',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
                     'callback' => '_wpp_api_beacon_list',
                     'access callback' => '_wpp_api_node_resource_access',
                     'access arguments' => array('view'),
                     'args' => array(),
+                ),
+            ),
+        ),
+        'floor' => array(
+            'operations' => array(
+                'retrieve' => array(
+                    'help' => 'Retrieves floor',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_floor_retrieve',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'floorNumber',
+                            'optional' => FALSE,
+                            'source' => array('path' => 0),
+                            'type' => 'int',
+                            'description' => 'The floor number',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -80,190 +119,61 @@ function wpp_api_services_resources()
 }
 
 /**
- * Callback function for gallery retrieve
- * @param null $nid
- * @return array
+ * Implements hook_node_validate().
  */
-function _wpp_api_gallery_retrieve($nid = null)
-{
+function wpp_api_node_validate($node, $form, &$form_state) {
+    $result = _wpp_api_get_existed_floor_by_floor_number($node);
 
-    $gallery = node_load($nid);
+    if (isset($result['node']) && $node->status === NODE_PUBLISHED) {
+        $existed = current($result['node']);
 
-    return _wpp_api_output_gallery($gallery);
-
-}
-
-/**
- * Callback function for gallery list
- *
- * @param $offset
- * @param $limit
- * @param string $detail 'true' | 'false'
- * @return array
- */
-function _wpp_api_gallery_list($offset, $limit, $detail)
-{
-    $galleryList = node_load_multiple(array(), array('type' => 'article'));
-
-    $galleryList = $limit ? array_slice($galleryList, $offset, $limit) : array_slice($galleryList, $offset);
-
-    return _wpp_api_output_gallery_list($galleryList, $detail);
-}
-
-/**
- * Callback function for beacon list
- *
- * @return mixed
- */
-function _wpp_api_beacon_list()
-{
-    $beaconList = node_load_multiple(array(), array('type' => 'beacon'));
-
-    return _wpp_api_output_beacon_list($beaconList);
-}
-
-/**
- * Get gallery post
- * @param object $gallery
- * @return array
- */
-function _wpp_api_output_gallery($gallery)
-{
-    $galleryAPI = new stdClass();
-
-    $galleryAPI->id = (int)$gallery->nid;
-    $galleryAPI->title = $gallery->title;
-    $galleryAPI->subTitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
-    $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
-    $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
-
-    if ($video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '') {
-        $galleryAPI->video = $video;
+        if (empty($node->nid) || ($node->nid && $node->nid != $existed->nid)) {
+            form_set_error('field_floor_number', t('The information of this floor has existed. Please <strong>UNPUBLISH</strong> or <strong>DELETE</strong> old version first.'));
+        }
     }
-
-    $galleryAPI->publishedAt = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->updateAt = date(DATE_ISO8601, $gallery->changed);
-
-    return $galleryAPI;
 }
 
 /**
- * Get gallery posts
- * @param array $galleryList
- * @param string $detail
- * @return array
+ * Implements hook_node_update().
  */
-function _wpp_api_output_gallery_list($galleryList = array(), $detail = 'false')
-{
-    $galleryListAPI = array();
+function wpp_api_node_update($node) {
+    $result = _wpp_api_get_existed_floor_by_floor_number($node);
 
-    foreach ($galleryList as $gallery) {
-        $galleryAPI = new stdClass();
+    if (isset($result['node']) && count($result['node']) > 1) {
 
-        $galleryAPI->id = (int)$gallery->nid;
-        $galleryAPI->title = $gallery->title;
-        $galleryAPI->subTitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+        if ((int) $node->original->status === NODE_NOT_PUBLISHED && (int) $node->status === NODE_PUBLISHED) {
+            $node->status = NODE_NOT_PUBLISHED;
 
-        if ($detail === 'true') {
-            $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+            node_save($node);
         }
 
-        $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
-        $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
-        $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
+        drupal_get_messages();
 
-        if ($video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '') {
-            $galleryAPI->video = $video;
-        }
+        drupal_set_message(t('There are more than one record existed in the same floor. Please <strong>UNPUBLISH</strong> or <strong>DELETE</strong> old version first.'), 'error');
+    }
+}
 
-        $galleryAPI->publishedAt = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
-        $galleryAPI->updateAt = date(DATE_ISO8601, $gallery->changed);
+/**
+ * Get existed floor information.
+ *
+ * @param $node
+ * @return bool|mixed
+ */
+function _wpp_api_get_existed_floor_by_floor_number($node) {
+    if ($node->type == 'floor') {
+        $floorNumber = $node->field_floor_number[LANGUAGE_NONE][0]['value'];
 
-        array_push($galleryListAPI, $galleryAPI);
+        $query = new EntityFieldQuery();
+        $query
+            ->entityCondition('entity_type', 'node')
+            ->entityCondition('bundle', 'floor')
+            ->propertyCondition('status', NODE_PUBLISHED)
+            ->fieldCondition('field_floor_number', 'value', $floorNumber);
+
+        $result = $query->execute();
+
+        return $result;
     }
 
-    return $galleryListAPI;
-}
-
-/**
- * Get beacon list
- *
- * @param array $beaconList
- * @return array
- */
-function _wpp_api_output_beacon_list($beaconList = array())
-{
-    $beaconListAPI = array();
-
-    foreach ($beaconList as $beacon) {
-        $beaconAPI = new stdClass();
-
-        $beaconAPI->uuid = $beacon->field_uuid[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->name = $beacon->title;
-        $beaconAPI->major = (int)$beacon->field_major[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->minor = (int)$beacon->field_minor[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->distance = isset($beacon->field_distance[LANGUAGE_NONE][0]['value']) ? (int)$beacon->field_distance[LANGUAGE_NONE][0]['value'] : '';
-
-        // check whether it has reference content
-        if ($contentId = isset($beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id']) ? $beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id'] : '') {
-            global $base_url;
-
-            // get the current endpoint path
-            $endpoints = services_endpoint_load_all();
-            $currentPath = '';
-
-            foreach ($endpoints as $endpoint) {
-                if (strpos(current_path(), $endpoint->path) === 0) {
-                    $currentPath = $endpoint->path;
-
-                    break;
-                }
-            }
-
-//            $content = node_load($contentId);
-
-            $beaconAPI->content = array(
-                'id' => (int)$contentId,
-                'type' => WPP_API_GALLERY_TYPE,
-                'href' => $currentPath ? $base_url . '/' . $currentPath . '/' . WPP_API_GALLERY_TYPE . '/' . $contentId : "",
-            );
-        }
-
-        $beaconAPI->updateAt = date(DATE_ISO8601, $beacon->changed);
-
-        array_push($beaconListAPI, $beaconAPI);
-    }
-
-    return $beaconListAPI;
-}
-
-/**
- * Determine whether the current user can access a node resource.
- *
- * @param $op
- *   One of view, update, create, delete per node_access().
- * @param $args
- *   Resource arguments passed through from the original request.
- * @return bool
- *
- * @see node_access()
- */
-function _wpp_api_node_resource_access($op = 'view', $args = array())
-{
-    return true;
-}
-
-/**
- * Get term name by given tid
- *
- * @param int $tid
- * @return string mixed
- */
-function _get_term_name_by_id($tid)
-{
-    $taxonomyTerm = taxonomy_term_load($tid);
-
-    return $taxonomyTerm->name;
+    return FALSE;
 }
