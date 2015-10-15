@@ -56,6 +56,17 @@ function _wpp_api_beacon_list() {
 }
 
 /**
+ * Callback function for floor list
+ *
+ * @return mixed
+ */
+function _wpp_api_floor_list() {
+    $floorList = node_load_multiple(array(), array('type' => 'floor'));
+
+    return _wpp_api_output_floor_list($floorList);
+}
+
+/**
  * Get gallery post
  * @param object $gallery
  * @return array
@@ -207,6 +218,7 @@ function _wpp_api_floor_retrieve($floorNumber) {
 
         $floorAPI->title = $floor->title;
         $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
+        $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
         $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
         $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
         $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
@@ -214,13 +226,13 @@ function _wpp_api_floor_retrieve($floorNumber) {
         $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
 
         $sliders = array();
-        if ($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
+        if ($floor->field_floor_slider_image_1 && $floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']) {
+        if ($floor->field_floor_slider_image_2 && $floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']) {
+        if ($floor->field_floor_slider_image_3 && $floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']);
         }
 
@@ -239,4 +251,54 @@ function _wpp_api_floor_retrieve($floorNumber) {
     }
 
     return $floorAPI;
+}
+
+/**
+ * Get floor list
+ *
+ * @return mixed
+ */
+function _wpp_api_output_floor_list ($floorList = array()) {
+    $floorListAPI = array();
+
+    foreach ($floorList as $floor) {
+        $floorAPI = new stdClass();
+
+        $floorAPI->title = $floor->title;
+        $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
+        $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
+        $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
+        $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
+        $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
+        $floorAPI->addressEN = $floor->field_floor_address_english[LANGUAGE_NONE][0]['value'];
+        $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
+
+        $sliders = array();
+        if ($floor->field_floor_slider_image_1 && $floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
+            $sliders[] = file_create_url($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']);
+        }
+        if ($floor->field_floor_slider_image_2 && $floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']) {
+            $sliders[] = file_create_url($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']);
+        }
+        if ($floor->field_floor_slider_image_3 && $floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']) {
+            $sliders[] = file_create_url($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']);
+        }
+
+        $floorAPI->sliders = $sliders;
+
+        $logoReferences = $floor->field_floor_logo_reference[LANGUAGE_NONE];
+        $logos = array();
+        foreach ($logoReferences as $logoReference) {
+            $logoId = $logoReference['target_id'];
+            $logo = node_load($logoId);
+
+            $logos[] = file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']);
+        }
+
+        $floorAPI->logos = $logos;
+
+        array_push($floorListAPI, $floorAPI);
+    }
+
+    return $floorListAPI;
 }

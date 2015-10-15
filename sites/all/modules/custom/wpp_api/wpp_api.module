@@ -13,7 +13,7 @@ function wpp_api_services_resources() {
         'gallery' => array(
             'operations' => array(
                 'retrieve' => array(
-                    'help' => 'Retrieves posted gallery',
+                    'help' => 'Retrieve posted gallery',
                     'file' => array(
                         'type' => 'inc',
                         'module' => 'wpp_api',
@@ -34,7 +34,7 @@ function wpp_api_services_resources() {
                     ),
                 ),
                 'index' => array(
-                    'help' => 'list posted gallery',
+                    'help' => 'List posted gallery',
                     'file' => array(
                         'type' => 'inc',
                         'module' => 'wpp_api',
@@ -91,7 +91,7 @@ function wpp_api_services_resources() {
         'floor' => array(
             'operations' => array(
                 'retrieve' => array(
-                    'help' => 'Retrieves floor',
+                    'help' => 'Retrieve floor',
                     'file' => array(
                         'type' => 'inc',
                         'module' => 'wpp_api',
@@ -111,6 +111,18 @@ function wpp_api_services_resources() {
                         ),
                     ),
                 ),
+            ),
+            'index' => array(
+                'help' => 'List floors',
+                'file' => array(
+                    'type' => 'inc',
+                    'module' => 'wpp_api',
+                    'name' => 'wpp_api'
+                ),
+                'callback' => '_wpp_api_floor_list',
+                'access callback' => '_wpp_api_node_resource_access',
+                'access arguments' => array('view'),
+                'args' => array(),
             ),
         ),
     );
