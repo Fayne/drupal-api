@@ -122,7 +122,24 @@ function wpp_api_services_resources() {
                 'callback' => '_wpp_api_floor_list',
                 'access callback' => '_wpp_api_node_resource_access',
                 'access arguments' => array('view'),
-                'args' => array(),
+                'args' => array(
+                    array(
+                        'name' => 'offset',
+                        'type' => 'int',
+                        'description' => 'Number of the offset',
+                        'source' => array('param' => 'offset'),
+                        'optional' => TRUE,
+                        'default' => '0',
+                    ),
+                    array(
+                        'name' => 'limit',
+                        'type' => 'int',
+                        'description' => 'Length of the array',
+                        'source' => array('param' => 'limit'),
+                        'optional' => TRUE,
+                        'default' => '0',
+                    ),
+                ),
             ),
         ),
     );
