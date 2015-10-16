@@ -58,10 +58,14 @@ function _wpp_api_beacon_list() {
 /**
  * Callback function for floor list
  *
- * @return mixed
+ * @param $offset
+ * @param $limit
+ * @return array
  */
-function _wpp_api_floor_list() {
+function _wpp_api_floor_list($offset, $limit) {
     $floorList = node_load_multiple(array(), array('type' => 'floor'));
+
+    $floorList = $limit ? array_slice($floorList, $offset, $limit) : array_slice($floorList, $offset);
 
     return _wpp_api_output_floor_list($floorList);
 }
@@ -256,7 +260,8 @@ function _wpp_api_floor_retrieve($floorNumber) {
 /**
  * Get floor list
  *
- * @return mixed
+ * @param array $floorList
+ * @return array
  */
 function _wpp_api_output_floor_list ($floorList = array()) {
     $floorListAPI = array();
@@ -267,11 +272,11 @@ function _wpp_api_output_floor_list ($floorList = array()) {
         $floorAPI->title = $floor->title;
         $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
         $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
-        $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
-        $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
-        $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
-        $floorAPI->addressEN = $floor->field_floor_address_english[LANGUAGE_NONE][0]['value'];
-        $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
+        // $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
+        // $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
+        // $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
+        // $floorAPI->addressEN = $floor->field_floor_address_english[LANGUAGE_NONE][0]['value'];
+        // $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
 
         $sliders = array();
         if ($floor->field_floor_slider_image_1 && $floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
@@ -284,7 +289,7 @@ function _wpp_api_output_floor_list ($floorList = array()) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']);
         }
 
-        $floorAPI->sliders = $sliders;
+        // $floorAPI->sliders = $sliders;
 
         $logoReferences = $floor->field_floor_logo_reference[LANGUAGE_NONE];
         $logos = array();
