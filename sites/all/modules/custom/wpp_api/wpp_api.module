@@ -142,6 +142,60 @@ function wpp_api_services_resources() {
                 ),
             ),
         ),
+        'deal' => array(
+            'operations' => array(
+                'retrieve' => array(
+                    'help' => 'Retrieve Deal',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_deal_retrieve',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'nid',
+                            'optional' => FALSE,
+                            'source' => array('path' => 0),
+                            'type' => 'int',
+                            'description' => 'The deal number',
+                        ),
+                    ),
+                ),
+            ),
+            'index' => array(
+                'help' => 'List deals',
+                'file' => array(
+                    'type' => 'inc',
+                    'module' => 'wpp_api',
+                    'name' => 'wpp_api'
+                ),
+                'callback' => '_wpp_api_deal_list',
+                'access callback' => '_wpp_api_node_resource_access',
+                'access arguments' => array('view'),
+                'args' => array(
+                    array(
+                        'name' => 'offset',
+                        'type' => 'int',
+                        'description' => 'Number of the offset',
+                        'source' => array('param' => 'offset'),
+                        'optional' => TRUE,
+                        'default' => '0',
+                    ),
+                    array(
+                        'name' => 'limit',
+                        'type' => 'int',
+                        'description' => 'Length of the array',
+                        'source' => array('param' => 'limit'),
+                        'optional' => TRUE,
+                        'default' => '0',
+                    ),
+                ),
+            ),
+        )
     );
 
     return $api;

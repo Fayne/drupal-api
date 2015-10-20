@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Deal Feature feature.
+ */
+
+include_once 'deal_feature.features.inc';
