@@ -91,7 +91,17 @@ function _wpp_api_floor_list($offset, $limit) {
  * @return array
  */
 function _wpp_api_deal_list($offset, $limit) {
-    $dealList = node_load_multiple(array(), array('type' => 'deal'));
+
+    $query = new EntityFieldQuery();
+    $query
+        ->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'deal')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->propertyOrderBy('changed', 'DESC');
+
+    $entities = $query->execute();
+
+    $dealList = node_load_multiple(array_keys($entities['node']));
 
     $dealList = $limit ? array_slice($dealList, $offset, $limit) : array_slice($dealList, $offset);
 
@@ -354,9 +364,9 @@ function _wpp_api_output_deal($deal) {
         $dealAPI->coordinates = (object) [
             "latitude" => $deal->field_latitude[LANGUAGE_NONE][0]['value'], 
             "longtitude" => $deal->field_longtitude[LANGUAGE_NONE][0]['value']
-        ];    
+        ];
     } else {
-        $dealAPI->coordinates = (object) [];
+        $dealAPI->coordinates = (object) ["latitude" => "", "longtitude" => ""];
     }
     
     $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? $deal->field_category[LANGUAGE_NONE] : [];
