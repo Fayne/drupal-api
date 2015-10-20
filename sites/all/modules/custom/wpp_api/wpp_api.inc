@@ -369,7 +369,7 @@ function _wpp_api_output_deal($deal) {
         $dealAPI->coordinates = (object) ["latitude" => "", "longtitude" => ""];
     }
     
-    $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? $deal->field_category[LANGUAGE_NONE] : [];
+    $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];
     $dealAPI->averageSpend = isset($deal->field_average_spend[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->hasDeal = (int) $deal->field_has_deal[LANGUAGE_NONE][0]['value'];
     $dealAPI->details = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
@@ -401,4 +401,15 @@ function _wpp_api_output_deal_list($dealList = array()) {
     }
 
     return $dealListAPI;
+}
+
+function _array_flatten($array)
+{
+    $return = array();
+
+    array_walk_recursive($array, function ($x) use (&$return) {
+        $return[] = $x;
+    });
+
+    return $return;
 }
