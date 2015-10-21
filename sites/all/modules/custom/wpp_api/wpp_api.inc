@@ -309,7 +309,7 @@ function _wpp_api_output_floor_list ($floorList = array()) {
 
     foreach ($floorList as $floor) {
         $floorAPI = new stdClass();
-        
+
         $floorAPI->title = $floor->title;
         $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
         $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
@@ -381,14 +381,14 @@ function _wpp_api_output_deal($deal) {
     $dealAPI->details = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
 
     $shopPictures = array();
-    if ($deal->field_shop_pictures_1 && $floor->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']) {
-        $shopPictures[] = file_create_url($floor->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']);
+    if ($deal->field_shop_pictures_1 && $deal->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']) {
+        $shopPictures[] = file_create_url($deal->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']);
     }
-    if ($deal->field_shop_pictures_2 && $floor->field_shop_pictures_2[LANGUAGE_NONE][0]['uri']) {
-        $shopPictures[] = file_create_url($floor->field_shop_pictures_2[LANGUAGE_NONE][0]['uri']);
+    if ($deal->field_shop_pictures_2 && $deal->field_shop_pictures_2[LANGUAGE_NONE][0]['uri']) {
+        $shopPictures[] = file_create_url($deal->field_shop_pictures_2[LANGUAGE_NONE][0]['uri']);
     }
-    if ($deal->field_shop_pictures_3 && $floor->field_shop_pictures_3[LANGUAGE_NONE][0]['uri']) {
-        $shopPictures[] = file_create_url($floor->field_shop_pictures_3[LANGUAGE_NONE][0]['uri']);
+    if ($deal->field_shop_pictures_3 && $deal->field_shop_pictures_3[LANGUAGE_NONE][0]['uri']) {
+        $shopPictures[] = file_create_url($deal->field_shop_pictures_3[LANGUAGE_NONE][0]['uri']);
     }
 
     $dealAPI->shopPictures = $shopPictures;
