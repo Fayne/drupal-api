@@ -117,9 +117,14 @@ function _wpp_api_output_gallery($gallery) {
     $galleryAPI = new stdClass();
 
     $galleryAPI->id = (int) $gallery->nid;
-    $galleryAPI->title = $gallery->title;
-    $galleryAPI->subTitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->titleEN = $gallery->title;
+    $galleryAPI->titleCN = isset($gallery->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
+
+    $galleryAPI->subTitleEN = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->subTitleCN = isset($gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value'] : '';
+
+    $galleryAPI->descriptionEN = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->descriptionCN = $gallery->field_description_chinese[LANGUAGE_NONE][0]['value'] ?: '';
     $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
     $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
     $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
@@ -147,11 +152,14 @@ function _wpp_api_output_gallery_list($galleryList = array(), $detail = 'false')
         $galleryAPI = new stdClass();
 
         $galleryAPI->id = (int) $gallery->nid;
-        $galleryAPI->title = $gallery->title;
-        $galleryAPI->subTitle = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->titleEN = $gallery->title;
+        $galleryAPI->titleCN = isset($gallery->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->subTitleEN = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->subTitleCN = isset($gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value'] : '';
 
         if ($detail === 'true') {
-            $galleryAPI->description = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+            $galleryAPI->descriptionEN = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
+            $galleryAPI->descriptionCN = $gallery->field_description_chinese[LANGUAGE_NONE][0]['value'] ?: '';
         }
 
         $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
@@ -377,7 +385,7 @@ function _wpp_api_output_deal($deal) {
     
     $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];
     $dealAPI->averageSpend = isset($deal->field_average_spend[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->hasDeal = (int) $deal->field_has_deal[LANGUAGE_NONE][0]['value'];
+    $dealAPI->hasDeal = isset($deal->field_has_deal[LANGUAGE_NONE][0]['value']) ? (int) $deal->field_has_deal[LANGUAGE_NONE][0]['value'] : 0;
     $dealAPI->details = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
 
     $shopPictures = array();
