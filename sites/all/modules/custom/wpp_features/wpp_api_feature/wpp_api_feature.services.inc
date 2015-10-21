@@ -43,10 +43,24 @@ function wpp_api_feature_default_services_endpoint() {
         ),
       ),
     ),
+    'deal' => array(
+      'alias' => 'deals',
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'floor' => array(
       'alias' => 'floors',
       'operations' => array(
         'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'index' => array(
           'enabled' => '1',
         ),
       ),

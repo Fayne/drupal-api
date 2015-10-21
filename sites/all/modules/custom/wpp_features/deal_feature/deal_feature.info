@@ -25,7 +25,6 @@ features[field_base][] = field_shop_pictures_3
 features[field_base][] = field_shop_tag
 features[field_base][] = field_telephone
 features[field_base][] = field_thumbnail
-features[field_instance][] = node-deal-body
 features[field_instance][] = node-deal-field_address
 features[field_instance][] = node-deal-field_average_spend
 features[field_instance][] = node-deal-field_category

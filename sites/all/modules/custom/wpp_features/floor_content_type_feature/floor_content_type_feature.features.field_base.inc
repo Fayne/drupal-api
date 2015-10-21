@@ -58,6 +58,30 @@ function floor_content_type_feature_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_floor_color'
+  $field_bases['field_floor_color'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_floor_color',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'field_floor_contact_number'
   $field_bases['field_floor_contact_number'] = array(
     'active' => 1,
@@ -146,6 +170,11 @@ function floor_content_type_feature_field_default_field_bases() {
     'settings' => array(
       'handler' => 'base',
       'handler_settings' => array(
+        'behaviors' => array(
+          'test_field_behavior' => array(
+            'status' => 0,
+          ),
+        ),
         'sort' => array(
           'direction' => 'ASC',
           'field' => 'field_floor_number_reference:value',

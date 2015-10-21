@@ -10,7 +10,7 @@
 function floor_logo_content_type_feature_node_info() {
   $items = array(
     'floor_logos' => array(
-      'name' => t('Floor Logos'),
+      'name' => t('Company/Brand'),
       'base' => 'node_content',
       'description' => t('This content type works for manager who can specific logo for each floor.'),
       'has_title' => '1',

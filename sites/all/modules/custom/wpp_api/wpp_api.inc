@@ -282,13 +282,13 @@ function _wpp_api_floor_retrieve($floorNumber) {
 
         $logoReferences = $floor->field_floor_logo_reference[LANGUAGE_NONE];
         $logos = array();
-        foreach ($logoReferences as $logoReference) {
+        foreach ($logoReferences as $index => $logoReference) {
             $logoId = $logoReference['target_id'];
             $logo = node_load($logoId);
 
             $logos[] = [
                 "url" => file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']), 
-                "order" => (int) $logo->field_logo_order[LANGUAGE_NONE][0]['value'] ?: 1
+                "order" => $index + 1
             ];
         }
 
@@ -334,13 +334,13 @@ function _wpp_api_output_floor_list ($floorList = array()) {
 
         $logoReferences = $floor->field_floor_logo_reference[LANGUAGE_NONE];
         $logos = array();
-        foreach ($logoReferences as $logoReference) {
+        foreach ($logoReferences as $index => $logoReference) {
             $logoId = $logoReference['target_id'];
             $logo = node_load($logoId);
 
             $logos[] = [
                 "url" => file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']), 
-                "order" => (int) $logo->field_logo_order[LANGUAGE_NONE][0]['value'] ?: 1
+                "order" => $index + 1
             ];
         }
 

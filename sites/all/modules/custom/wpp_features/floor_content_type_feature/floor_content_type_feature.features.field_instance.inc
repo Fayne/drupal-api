@@ -46,7 +46,7 @@ function floor_content_type_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -86,7 +86,47 @@ function floor_content_type_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-floor-field_floor_color'
+  $field_instances['node-floor-field_floor_color'] = array(
+    'bundle' => 'floor',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_floor_color',
+    'label' => 'Floor color',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 4,
     ),
   );
 
@@ -126,7 +166,7 @@ function floor_content_type_feature_field_default_field_instances() {
         'size' => 20,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -235,17 +275,26 @@ function floor_content_type_feature_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_floor_logo_reference',
-    'label' => 'Logo',
+    'label' => 'Logos',
     'required' => 1,
     'settings' => array(
+      'behaviors' => array(
+        'test_instance_behavior' => array(
+          'status' => 0,
+        ),
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 10,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 11,
     ),
   );
 
@@ -341,7 +390,7 @@ function floor_content_type_feature_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -391,7 +440,7 @@ function floor_content_type_feature_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -441,7 +490,7 @@ function floor_content_type_feature_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -450,10 +499,11 @@ function floor_content_type_feature_field_default_field_instances() {
   t('Address (Chinese)');
   t('Address (English)');
   t('Contact number');
+  t('Floor color');
   t('Floor number');
   t('Introduction (Chinese)');
   t('Introduction (English)');
-  t('Logo');
+  t('Logos');
   t('Slider image 1');
   t('Slider image 2');
   t('Slider image 3');
