@@ -366,13 +366,13 @@ function _wpp_api_output_deal($deal) {
     $dealAPI->shopDescriptionEN = isset($deal->field_shop_description_english[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_english[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->shopDescriptionCN = isset($deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value'] : '';
 
-    if ($deal->field_latitude && $deal->field_longtitude) {
+    if ($deal->field_latitude && $deal->field_longitude) {
         $dealAPI->coordinates = (object) [
             "latitude" => $deal->field_latitude[LANGUAGE_NONE][0]['value'], 
-            "longtitude" => $deal->field_longtitude[LANGUAGE_NONE][0]['value']
+            "longitude" => $deal->field_longitude[LANGUAGE_NONE][0]['value']
         ];
     } else {
-        $dealAPI->coordinates = (object) ["latitude" => "", "longtitude" => ""];
+        $dealAPI->coordinates = (object) ["latitude" => "", "longitude" => ""];
     }
     
     $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];

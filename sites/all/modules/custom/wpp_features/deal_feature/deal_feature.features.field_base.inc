@@ -160,13 +160,13 @@ function deal_feature_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_longtitude'
-  $field_bases['field_longtitude'] = array(
+  // Exported field_base: 'field_longitude'
+  $field_bases['field_longitude'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_longtitude',
+    'field_name' => 'field_longitude',
     'field_permissions' => array(
       'type' => 0,
     ),

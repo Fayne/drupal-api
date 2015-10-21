@@ -46,7 +46,7 @@ function deal_feature_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 5,
     ),
   );
 
@@ -86,7 +86,7 @@ function deal_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 8,
     ),
   );
 
@@ -123,7 +123,7 @@ function deal_feature_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -163,7 +163,7 @@ function deal_feature_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 11,
+      'weight' => 10,
     ),
   );
 
@@ -200,7 +200,7 @@ function deal_feature_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -240,23 +240,23 @@ function deal_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
-  // Exported field_instance: 'node-deal-field_longtitude'
-  $field_instances['node-deal-field_longtitude'] = array(
+  // Exported field_instance: 'node-deal-field_longitude'
+  $field_instances['node-deal-field_longitude'] = array(
     'bundle' => 'deal',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Longtitude',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 19,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -266,8 +266,8 @@ function deal_feature_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_longtitude',
-    'label' => 'Longtitude',
+    'field_name' => 'field_longitude',
+    'label' => 'Longitude',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -280,7 +280,7 @@ function deal_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 4,
     ),
   );
 
@@ -320,7 +320,7 @@ function deal_feature_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 1,
     ),
   );
 
@@ -360,7 +360,7 @@ function deal_feature_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 4,
+      'weight' => 2,
     ),
   );
 
@@ -590,7 +590,7 @@ function deal_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 6,
     ),
   );
 
@@ -640,7 +640,7 @@ function deal_feature_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 11,
     ),
   );
 
@@ -653,7 +653,7 @@ function deal_feature_field_default_field_instances() {
   t('Details');
   t('Has deal');
   t('Latitude');
-  t('Longtitude');
+  t('Longitude');
   t('Shop description (Chinese)');
   t('Shop description (English)');
   t('Shop pictures 1');
