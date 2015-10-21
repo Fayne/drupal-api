@@ -286,7 +286,10 @@ function _wpp_api_floor_retrieve($floorNumber) {
             $logoId = $logoReference['target_id'];
             $logo = node_load($logoId);
 
-            $logos[] = file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']);
+            $logos[] = [
+                "url" => file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']), 
+                "order" => (int) $logo->field_logo_order[LANGUAGE_NONE][0]['value'] ?: 1
+            ];
         }
 
         $floorAPI->logos = $logos;
@@ -306,7 +309,7 @@ function _wpp_api_output_floor_list ($floorList = array()) {
 
     foreach ($floorList as $floor) {
         $floorAPI = new stdClass();
-
+        
         $floorAPI->title = $floor->title;
         $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
         $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
@@ -335,7 +338,10 @@ function _wpp_api_output_floor_list ($floorList = array()) {
             $logoId = $logoReference['target_id'];
             $logo = node_load($logoId);
 
-            $logos[] = file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']);
+            $logos[] = [
+                "url" => file_create_url($logo->field_floor_logo[LANGUAGE_NONE][0]['uri']), 
+                "order" => (int) $logo->field_logo_order[LANGUAGE_NONE][0]['value'] ?: 1
+            ];
         }
 
         $floorAPI->logos = $logos;
