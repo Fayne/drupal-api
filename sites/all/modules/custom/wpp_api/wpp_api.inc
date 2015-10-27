@@ -370,7 +370,8 @@ function _wpp_api_output_deal($deal) {
     $dealAPI = new stdClass();
 
     $dealAPI->id = (int) $deal->nid;
-    $dealAPI->shopName = $deal->title;
+    $dealAPI->shopNameEN = $deal->title;
+    $dealAPI->shopNameCN = isset($deal->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->shopDescriptionEN = isset($deal->field_shop_description_english[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_english[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->shopDescriptionCN = isset($deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value'] : '';
 
@@ -382,11 +383,16 @@ function _wpp_api_output_deal($deal) {
     } else {
         $dealAPI->coordinates = (object) ["latitude" => "", "longitude" => ""];
     }
+    $dealAPI->addressEN = isset($deal->field_address[LANGUAGE_NONE][0]['value']) ? $deal->field_address[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->addressCN = isset($deal->field_address_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_address_chinese[LANGUAGE_NONE][0]['value'] : '';
     
-    $dealAPI->categories = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];
-    $dealAPI->averageSpend = isset($deal->field_average_spend[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->categoriesEN = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];
+    $dealAPI->categoriesCN = isset($deal->field_category_chinese[LANGUAGE_NONE]) ? _array_flatten($deal->field_category_chinese[LANGUAGE_NONE]) : [];
+    $dealAPI->averageSpendEN = isset($deal->field_average_spend[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->averageSpendCN = isset($deal->field_average_spend_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend_chinese[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->hasDeal = isset($deal->field_has_deal[LANGUAGE_NONE][0]['value']) ? (int) $deal->field_has_deal[LANGUAGE_NONE][0]['value'] : 0;
-    $dealAPI->details = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->detailsEN = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->detailsCN = isset($deal->field_details_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_details_chinese[LANGUAGE_NONE][0]['value'] : '';
 
     $shopPictures = array();
     if ($deal->field_shop_pictures_1 && $deal->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']) {
@@ -400,9 +406,9 @@ function _wpp_api_output_deal($deal) {
     }
 
     $dealAPI->shopPictures = $shopPictures;
-    $dealAPI->shopTag = isset($deal->field_shop_tag[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_tag[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->shopTagEN = isset($deal->field_shop_tag[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_tag[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->shopTagCN = isset($deal->field_shop_tag_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_tag_chinese[LANGUAGE_NONE][0]['value'] : '';
     $dealAPI->telephone = isset($deal->field_telephone[LANGUAGE_NONE][0]['value']) ? $deal->field_telephone[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->address = isset($deal->field_address[LANGUAGE_NONE][0]['value']) ? $deal->field_address[LANGUAGE_NONE][0]['value'] : '';
 
     return $dealAPI;
 }
