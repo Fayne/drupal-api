@@ -124,6 +124,7 @@ function deal_feature_field_default_field_bases() {
         'restaurant' => 'Restaurant',
         'cafe' => 'Cafe',
         'gym' => 'Gym',
+        'other' => 'Other',
       ),
       'allowed_values_function' => '',
     ),
@@ -134,10 +135,13 @@ function deal_feature_field_default_field_bases() {
   // Exported field_base: 'field_category_chinese'
   $field_bases['field_category_chinese'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_category_chinese',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -150,6 +154,7 @@ function deal_feature_field_default_field_bases() {
         'restaurant' => '餐厅',
         'cafe' => '咖啡',
         'gym' => '健身房',
+        'other' => '其他',
       ),
       'allowed_values_function' => '',
     ),
