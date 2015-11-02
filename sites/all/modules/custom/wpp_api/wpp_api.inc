@@ -423,6 +423,20 @@ function _wpp_api_output_deal_list($dealList = array()) {
     return $dealListAPI;
 }
 
+/**
+ * Notify WPP when a user leaves a feedback.
+ *
+ * @param $email the user email address
+ * @param $name the user full name
+ * @param $message the user message
+ *
+ * @return mixed
+ */
+function _wpp_api_user_feedback($email, $name, $message) {
+    // @TODO: Send the email
+}
+
+
 function _array_flatten($array)
 {
     $return = array();

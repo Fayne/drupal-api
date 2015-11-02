@@ -195,7 +195,46 @@ function wpp_api_services_resources() {
                     ),
                 ),
             ),
-        )
+        ),
+        'feedback' => array(
+            'operations' => array(
+                'create' => array(
+                    'help' => 'Submit a user feedback',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_user_feedback',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('create'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'email',
+                            'optional' => FALSE,
+                            'source' => 'data',
+                            'type' => 'string',
+                            'description' => 'The user email address',
+                        ),
+                        array(
+                            'name' => 'name',
+                            'optional' => FALSE,
+                            'source' => 'data',
+                            'type' => 'string',
+                            'description' => 'The user full name',
+                        ),
+                        array(
+                            'name' => 'message',
+                            'optional' => FALSE,
+                            'source' => 'data',
+                            'type' => 'string',
+                            'description' => 'The user submitted feedback message',
+                        ),
+                    ),
+                ),
+            ),
+        ),
     );
 
     return $api;
