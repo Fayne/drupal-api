@@ -7,7 +7,7 @@ set :settings_path, "#{fetch(:deploy_to)}/shared/sites/default"
 # set a branch for this release
 set :branch, 'develop'
 
-set :app_environment, 'staging'
+set :app_environment, 'production'
 
 SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
 SSHKit.config.command_map[:drush] = "#{shared_path.join("vendor/bin/drush")}"
