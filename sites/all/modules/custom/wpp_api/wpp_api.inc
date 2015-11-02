@@ -437,7 +437,7 @@ function _wpp_api_user_feedback($email, $name, $message) {
     $params['name'] = $name;
     $params['message'] = $message;
 
-    $mail = drupal_mail('wpp_api', 'user_feedback', variable_get('wpp_api_feedback_email', 'djamel@mobilenowgrou.com'), language_default(), $params);
+    $mail = drupal_mail('wpp_api', 'user_feedback', variable_get('wpp_api_feedback_email', 'djamel@mobilenowgroup.com'), language_default(), $params);
 
     if (!empty($mail)) {
         return array(
