@@ -6,6 +6,61 @@
 define('WPP_API_GALLERY_TYPE', 'gallery');
 
 /**
+ * Implements hook_permission().
+ */
+function wpp_api_permission() {
+    return array(
+        'administer wpp' => array(
+            'title' => t('Administer WPP API'),
+            'description' => t('Access WPP API administration page.'),
+            'restrict access' => TRUE,
+        ),
+    );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function wpp_api_menu() {
+    $items = array();
+
+    $items['admin/config/services/wpp'] = array(
+        'title' => 'WPP API',
+        'description' => 'Administer WPP API settings',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('wpp_api_settings_form'),
+        'access callback' => 'user_access',
+        'access arguments' => array('Administer wpp'),
+    );
+
+    $items['admin/config/services/wpp/settings'] = array(
+        'title' => 'Administer WPP API settings',
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'weight' => -1,
+    );
+
+    return $items;
+}
+
+/**
+ * WPP API settings form
+ * @see af_user_menu()
+ */
+function wpp_api_settings_form($form, &$form_state) {
+    $form['wpp_api_feedback_email'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Email feedback'),
+        '#maxlength' => 255,
+        '#size' => 120,
+        '#default_value' => variable_get('wpp_api_feedback_email', 'de.feddad@gmail.com'),
+        '#description' => t('Enter WPP email address that will receive users feedbacks.'),
+    );
+
+    return system_settings_form($form);
+}
+
+/**
  * Implements of hook_services_resources().
  */
 function wpp_api_services_resources() {
@@ -195,7 +250,46 @@ function wpp_api_services_resources() {
                     ),
                 ),
             ),
-        )
+        ),
+        'feedback' => array(
+            'operations' => array(
+                'create' => array(
+                    'help' => 'Submit a user feedback',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_user_feedback',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('create'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'email',
+                            'optional' => FALSE,
+                            'source' => array('data' => 'email'),
+                            'type' => 'string',
+                            'description' => 'The user email address',
+                        ),
+                        array(
+                            'name' => 'name',
+                            'optional' => FALSE,
+                            'source' => array('data' => 'name'),
+                            'type' => 'string',
+                            'description' => 'The user full name',
+                        ),
+                        array(
+                            'name' => 'message',
+                            'optional' => FALSE,
+                            'source' => array('data' => 'message'),
+                            'type' => 'string',
+                            'description' => 'The user submitted feedback message',
+                        ),
+                    ),
+                ),
+            ),
+        ),
     );
 
     return $api;
