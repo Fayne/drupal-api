@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.7" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="white">
+	<meta name="apple-mobile-web-app-title" content="OTA Installation Instructions">
+	<meta name="author" content="JWT Shanghai for WPP" />
+	<title>WPP Campus</title>
+	<style type="text/css">
+		body {margin:auto 0;font-family:Helvetica,"Hei","heiti";background-color:#4c91c6;}
+		div#main {margin:auto 0;text-align:center;min-width:640px;max-width:750px;font-size:25px;color:#fff;}
+		div#content {display:block;}
+		img#header {min-width:500px;max-width:750px;padding-top:15px;padding-bottom:15px;}
+		img#hdr1 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png1 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr2 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png2 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr3 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png3 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr4 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png4 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr5 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png5 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr6 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png6 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr7 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png7 {min-width:400px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#hdr8 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		img#png8 {min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+
+	</style>
+</head>
+<script src="s/detect.js"></script>
+<body>
+	<div id="main">
+		<div id="content"><img id="header" src="i/iOS9-cn_01.png" alt="" width="100%" /></div>
+		<div id="content"><img id="spacer1" src="i/s.gif" height="30" /></div>
+		<div id="content"><img id="hdr1" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="png1" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="spacer2" src="i/s.gif" height="30" /></div>
+		<div id="content"><img id="hdr2" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png2" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr3" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png3" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr4" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png4" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr5" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png5" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr6" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png6" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr7" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="png7" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="hdr8" src="" alt="" width="65%" /></div>
+		<div id="content"><img id="spacer3" src="i/s.gif" height="30" /></div>
+		<div id="content"><img id="png8" src="" alt="" width="90%" /></div>
+		<div id="content"><img id="spacer4" src="i/s.gif" height="30" /></div>
+	</div>
+	<script>
+	// requires detect.js to work
+
+	if(isMobile.iOS8()) {showContent(8);}
+	if(isMobile.iOS9()) {showContent(9);}
+	if(isMobile.Android(){showContent(0);}
+	if(!isMobile.any()) {document.getElementById("main").innerHTML = "<center><br>对不起，您的设备不支持。或者您用PC机浏览此页面。<br>请用手机扫描下方的二维码。<br><br><img src='i/qr-instruct.png' width='200' /></center>";}
+
+
+	</script>
+</body>
+</html>

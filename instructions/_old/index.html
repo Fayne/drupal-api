@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.7" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="white">
+	<meta name="apple-mobile-web-app-title" content="OTA Installation Instructions">
+	<meta name="author" content="JWT Shanghai for WPP" />
+	<title>WPP Campus</title>
+	<style type="text/css">
+		body {margin:auto 0;font-family:Helvetica,"Hei","heiti";background-color:#4c91c6;}
+		div#main {margin:auto 0;text-align:center;/* width:100% */;font-size:25px;color:#fff;}
+		div#content {display:block;}
+		img#header {width:90%;min-width:500px;max-width:750px;padding-top:15px;padding-bottom:15px;}
+		img#gif {width:40%;min-width:500px;max-width:640px;padding-right:10px;padding-left:10px;}
+		@media screen and (min-width: 480px) {
+		   	body {margin:auto 0;font-family:Helvetica,"Hei","heiti";background-color:#4c91c6;}
+		    div#main {margin:auto 0;text-align:center;/* width:100%; */font-size:25px;color:#fff;}
+			div#content {display:block;}
+			img#header {width:440px;min-width:440px;max-width:480px;padding-top:5px;padding-bottom:5px;}
+			img#gif {width:440px;min-width:440px;max-width:480px;padding-right:2px;padding-left:2px;}
+		}
+		@media screen and (min-width: 640px) {
+		   	body {margin:auto 0;font-family:Helvetica,"Hei","heiti";background-color:#4c91c6;}
+		    div#main {margin:auto 0;text-align:center;/* width:100%; */font-size:25px;color:#fff;}
+			div#content {display:block;}
+			img#header {width:600px;min-width:600px;max-width:640px;padding-top:5px;padding-bottom:5px;}
+			img#gif {width:600px;min-width:600px;max-width:640px;padding-right:2px;padding-left:2px;}
+		}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<div id="content"><img id="header" src="" alt="" width="100%" /></div>
+		<div id="content"><img id="gif" src="" alt="" width="100%" /></div>
+	</div>
+	<script>
+	
+	var isMobile = {
+	    Android: function() {
+	        return navigator.userAgent.match(/Android/i);
+	    },
+	    BlackBerry: function() {
+	        return navigator.userAgent.match(/BlackBerry/i);
+	    },
+	    iOS7: function() {
+	        return navigator.userAgent.match(/iPhone OS 7/i);
+	    },
+	    iOS8: function() {
+	        return navigator.userAgent.match(/iPhone OS 8/i);
+	    },
+	    iOS9: function() {
+	        return navigator.userAgent.match(/iPhone OS 9/i);
+	    },
+	    Windows: function() {
+	        return navigator.userAgent.match(/IEMobile/i);
+	    },
+	    any: function() {
+	        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS7() || isMobile.iOS8() || isMobile.iOS9() || isMobile.Windows());
+	    }
+	};
+	if (navigator.language.match(/en/i)){
+		if(isMobile.iOS7()) {
+			document.getElementById("main").innerHTML = "<br>Sorry you have an unsupported device.";
+		}
+		if(isMobile.iOS8()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_iphone.png");
+			document.getElementById("gif").setAttribute("src", "i/IOS8-en.gif");
+			document.getElementById("header").setAttribute("alt", "iPhone Header");
+			document.getElementById("gif").setAttribute("alt", "iPhone iOS8 Instructions");
+			document.getElementById("header").setAttribute("width", "90%");
+			document.getElementById("gif").setAttribute("width", "90%");
+		}
+		if(isMobile.iOS9()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_iphone.png");
+			document.getElementById("gif").setAttribute("src", "i/IOS9-en.gif");
+			document.getElementById("header").setAttribute("alt", "iPhone Header");
+			document.getElementById("gif").setAttribute("alt", "iPhone iOS9 Instructions");
+			document.getElementById("header").setAttribute("width", "90%");
+			document.getElementById("gif").setAttribute("width", "90%");
+		}
+		if(isMobile.Android()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_android.png");
+			document.getElementById("gif").setAttribute("src", "i/Android-en.gif");
+			document.getElementById("header").setAttribute("alt", "Android Header");
+			document.getElementById("gif").setAttribute("alt", "Android English Instructions");
+			document.getElementById("header").setAttribute("width", "90%");
+			document.getElementById("gif").setAttribute("width", "90%");
+		}
+		if(!isMobile.any()) {
+			//document.getElementById("main").innerHTML = "Not a Mobile Device!";
+			document.getElementById("main").innerHTML = "<center><br>Sorry you have an unsupported device or you are using a desktop computer.<br>Please use your mobile browser to scan the QR code below.<br><br><img src='i/qr-instruct.png' width='200' /></center>";
+		}
+	}
+	if (navigator.language.match(/cn/i)){
+		if(isMobile.iOS7()) {
+			document.getElementById("main").innerHTML = "<br><br>对不起，您的设备不支持";
+		}
+		if(isMobile.iOS8()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_iphone.png");
+			document.getElementById("gif").setAttribute("src", "i/IOS8-cn.gif");
+			document.getElementById("header").setAttribute("alt", "iPhone Header");
+			document.getElementById("gif").setAttribute("alt", "iPhone iOS8 中文安装说明");
+		}
+		if(isMobile.iOS9()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_iphone.png");
+			document.getElementById("gif").setAttribute("src", "i/IOS9-cn.gif");
+			document.getElementById("header").setAttribute("alt", "iPhone Header");
+			document.getElementById("gif").setAttribute("alt", "iPhone iOS9 中文安装说明");
+		}
+		if(isMobile.Android()) {
+			document.getElementById("header").setAttribute("src", "i/hdr_android.png");
+			document.getElementById("gif").setAttribute("src", "i/Android-en.gif");
+			document.getElementById("header").setAttribute("alt", "Android Header");
+			document.getElementById("gif").setAttribute("alt", "Android 中文安装说明");
+		}
+		if(!isMobile.any()) {
+			//document.getElementById("main").innerHTML = "不是手机！";
+			document.getElementById("main").innerHTML = "<center>><br>对不起，您的设备不支持。或者您用PC机浏览此页面。<br>请用手机扫描下方的二维码。<br><br><img src='i/qr-instruct.png' width='200' /></center>";
+		}
+	}
+
+	</script>
+</body>
+</html>

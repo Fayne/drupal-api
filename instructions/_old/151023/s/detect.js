@@ -1,0 +1,2 @@
+
+var isMobile={Android:function(){return navigator.userAgent.match(/Android/i);},BlackBerry:function(){return navigator.userAgent.match(/BlackBerry/i);},iOS7:function(){return navigator.userAgent.match(/iPhone OS 7/i);},iOS8:function(){return navigator.userAgent.match(/iPhone OS 8/i);},iOS9:function(){return navigator.userAgent.match(/iPhone OS 9/i);},Windows:function(){return navigator.userAgent.match(/IEMobile/i);},any:function(){return(isMobile.Android()||isMobile.BlackBerry()||isMobile.iOS7()||isMobile.iOS8()||isMobile.iOS9()||isMobile.Windows());}};
