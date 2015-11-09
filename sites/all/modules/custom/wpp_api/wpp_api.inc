@@ -631,8 +631,8 @@ function _array_flatten($array) {
 /**
  * Get custom field value
  *
- * @param $model
- * @param $fieldName
+ * @param object $model
+ * @param string $fieldName
  * @param string $valueName
  * @param string $type
  * @param string $default
