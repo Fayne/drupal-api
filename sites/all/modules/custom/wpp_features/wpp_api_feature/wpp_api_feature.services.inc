@@ -49,6 +49,9 @@ function wpp_api_feature_default_services_endpoint() {
         'retrieve' => array(
           'enabled' => '1',
         ),
+        'index' => array(
+          'enabled' => '1',
+        ),
       ),
     ),
     'deal' => array(
