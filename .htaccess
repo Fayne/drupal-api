@@ -142,5 +142,8 @@ DirectoryIndex index.php index.html index.htm
   </IfModule>
 </IfModule>
 
-php_value upload_max_filesize 10M
-php_value post_max_size 10M
+# Add headers to all responses.
+<IfModule mod_headers.c>
+  # Disable content sniffing, since it's an attack vector.
+  Header always set X-Content-Type-Options nosniff
+</IfModule>
