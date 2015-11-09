@@ -42,6 +42,18 @@ function _wpp_api_deal_retrieve($nid = NULL) {
 }
 
 /**
+ * Callback function for company retrieve
+ *
+ * @param $companyCode
+ * @return mixed
+ */
+function _wpp_api_company_retrieve($companyCode) {
+
+    return _wpp_api_output_company($companyCode);
+
+}
+
+/**
  * Callback function for gallery list
  *
  * @param $offset
@@ -276,13 +288,13 @@ function _wpp_api_floor_retrieve($floorNumber) {
         $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
 
         $sliders = array();
-        if ($floor->field_floor_slider_image_1 && $floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_2 && $floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_3 && $floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']);
         }
 
@@ -307,6 +319,59 @@ function _wpp_api_floor_retrieve($floorNumber) {
 }
 
 /**
+ * Get company detail by given company code.
+ *
+ * @param string $companyCode
+ *
+ * @return stdClass
+ */
+function _wpp_api_output_company($companyCode = '') {
+
+    $companyAPI = new stdClass();
+
+    $query = new EntityFieldQuery();
+    $query
+        ->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'company')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('field_company_code', 'value', $companyCode)
+        ->range(0, 1);
+
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+
+        $companyNid = current(array_keys($result['node']));
+        $company = node_load($companyNid);
+
+        $companyAPI->titleEN = $company->title;
+        $companyAPI->titleCN = $company->field_company_title_cn[LANGUAGE_NONE][0]['value'];
+        $companyAPI->floorNumber = $company->field_company_floor_number[LANGUAGE_NONE][0]['value'];
+        $companyAPI->companycode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
+        $companyAPI->introductionEN = $company->field_company_intro_english[LANGUAGE_NONE][0]['value'];
+        $companyAPI->introductionCN = $company->field_company_intro_chinese[LANGUAGE_NONE][0]['value'];
+        $companyAPI->contactNumber = $company->field_company_contact_number[LANGUAGE_NONE][0]['value'];
+        $companyAPI->addressEN = $company->field_company_address_english[LANGUAGE_NONE][0]['value'];
+        $companyAPI->addressCN = $company->field_company_address_chinese[LANGUAGE_NONE][0]['value'];
+
+        $sliders = array();
+        if (isset($company->field_company_slider_image_1[LANGUAGE_NONE][0]['uri'])) {
+            $sliders[] = file_create_url($company->field_company_slider_image_1[LANGUAGE_NONE][0]['uri']);
+        }
+        if (isset($company->field_company_slider_image_2[LANGUAGE_NONE][0]['uri'])) {
+            $sliders[] = file_create_url($company->field_company_slider_image_2[LANGUAGE_NONE][0]['uri']);
+        }
+        if (isset($company->field_company_slider_image_3[LANGUAGE_NONE][0]['uri'])) {
+            $sliders[] = file_create_url($company->field_company_slider_image_3[LANGUAGE_NONE][0]['uri']);
+        }
+
+        $companyAPI->sliders = $sliders;
+    }
+
+    return $companyAPI;
+}
+
+/**
  * Get floor list
  *
  * @param array $floorList
@@ -328,13 +393,13 @@ function _wpp_api_output_floor_list ($floorList = array()) {
         // $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
 
         $sliders = array();
-        if ($floor->field_floor_slider_image_1 && $floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_2 && $floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_2[LANGUAGE_NONE][0]['uri']);
         }
-        if ($floor->field_floor_slider_image_3 && $floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']) {
+        if (isset($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri'])) {
             $sliders[] = file_create_url($floor->field_floor_slider_image_3[LANGUAGE_NONE][0]['uri']);
         }
 

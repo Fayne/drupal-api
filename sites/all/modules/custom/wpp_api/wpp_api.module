@@ -197,6 +197,31 @@ function wpp_api_services_resources() {
                 ),
             ),
         ),
+        'company' => array(
+            'operations' => array(
+                'retrieve' => array(
+                    'help' => 'Retrieve company',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_company_retrieve',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'access arguments append' => TRUE,
+                    'args' => array(
+                        array(
+                            'name' => 'companyCode',
+                            'optional' => FALSE,
+                            'source' => array('path' => 0),
+                            'type' => 'string',
+                            'description' => 'The company code`',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'deal' => array(
             'operations' => array(
                 'retrieve' => array(
