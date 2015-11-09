@@ -14,7 +14,7 @@ function floor_logo_content_type_feature_node_info() {
       'base' => 'node_content',
       'description' => t('This content type works for manager who can specific logo for each floor.'),
       'has_title' => '1',
-      'title_label' => t('Logo description'),
+      'title_label' => t('Company (English)'),
       'help' => '',
     ),
   );

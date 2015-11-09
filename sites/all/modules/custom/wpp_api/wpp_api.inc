@@ -96,6 +96,22 @@ function _wpp_api_floor_list($offset, $limit) {
 }
 
 /**
+ * Callback function for company list
+ *
+ * @param $offset
+ * @param $limit
+ *
+ * @return array
+ */
+function _wpp_api_company_list($offset, $limit) {
+    $companyList = node_load_multiple(array(), array('type' => 'floor_logos'));
+
+    $companyList = $limit ? array_slice($companyList, $offset, $limit) : array_slice($companyList, $offset);
+
+    return _wpp_api_output_company_list($companyList);
+}
+
+/**
  * Callback function for deal list
  *
  * @param $offset
@@ -332,7 +348,7 @@ function _wpp_api_output_company($companyCode = '') {
     $query = new EntityFieldQuery();
     $query
         ->entityCondition('entity_type', 'node')
-        ->entityCondition('bundle', 'company')
+        ->entityCondition('bundle', 'floor_logos')
         ->propertyCondition('status', NODE_PUBLISHED)
         ->fieldCondition('field_company_code', 'value', $companyCode)
         ->range(0, 1);
@@ -345,9 +361,9 @@ function _wpp_api_output_company($companyCode = '') {
         $company = node_load($companyNid);
 
         $companyAPI->titleEN = $company->title;
-        $companyAPI->titleCN = $company->field_company_title_cn[LANGUAGE_NONE][0]['value'];
-        $companyAPI->floorNumber = $company->field_company_floor_number[LANGUAGE_NONE][0]['value'];
-        $companyAPI->companycode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
+        $companyAPI->titleCN = $company->field_company_title_chinese[LANGUAGE_NONE][0]['value'];
+        $companyAPI->floorNumber = $company->field_floor_number_reference[LANGUAGE_NONE][0]['value'];
+        $companyAPI->companyCode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
         $companyAPI->introductionEN = $company->field_company_intro_english[LANGUAGE_NONE][0]['value'];
         $companyAPI->introductionCN = $company->field_company_intro_chinese[LANGUAGE_NONE][0]['value'];
         $companyAPI->contactNumber = $company->field_company_contact_number[LANGUAGE_NONE][0]['value'];
@@ -369,6 +385,32 @@ function _wpp_api_output_company($companyCode = '') {
     }
 
     return $companyAPI;
+}
+
+/**
+ * Get company list.
+ *
+ * @param array $companyList
+ * @return array
+ */
+function _wpp_api_output_company_list ($companyList = array()) {
+    $companyListAPI = array();
+
+    foreach ($companyList as $company) {
+        $companyAPI = new stdClass();
+
+        $companyAPI->titleEN = $company->title;
+        $companyAPI->titleCN = $company->field_company_title_chinese[LANGUAGE_NONE][0]['value'];
+        $companyAPI->floorNumber = (int) $company->field_floor_number_reference[LANGUAGE_NONE][0]['value'];
+        $companyAPI->companyCode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
+        $companyAPI->contactNumber = $company->field_company_contact_number[LANGUAGE_NONE][0]['value'];
+        $companyAPI->addressEN = $company->field_company_address_english[LANGUAGE_NONE][0]['value'];
+        $companyAPI->addressCN = $company->field_company_address_chinese[LANGUAGE_NONE][0]['value'];
+
+        array_push($companyListAPI, $companyAPI);
+    }
+
+    return $companyListAPI;
 }
 
 /**
@@ -478,6 +520,13 @@ function _wpp_api_output_deal($deal) {
     return $dealAPI;
 }
 
+/**
+ * Get deal list.
+ *
+ * @param array $dealList
+ *
+ * @return array
+ */
 function _wpp_api_output_deal_list($dealList = array()) {
     $dealListAPI = array();
 
@@ -563,6 +612,13 @@ function wpp_api_mail_tokens(&$replacements, $data, $options) {
     $replacements['[app-user:message]'] = $data['message'];
 }
 
+/**
+ * array flatten
+ *
+ * @param $array
+ * 
+ * @return array
+ */
 function _array_flatten($array) {
     $return = array();
 

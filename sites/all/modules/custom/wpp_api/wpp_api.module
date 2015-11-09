@@ -166,33 +166,33 @@ function wpp_api_services_resources() {
                         ),
                     ),
                 ),
-            ),
-            'index' => array(
-                'help' => 'List floors',
-                'file' => array(
-                    'type' => 'inc',
-                    'module' => 'wpp_api',
-                    'name' => 'wpp_api'
-                ),
-                'callback' => '_wpp_api_floor_list',
-                'access callback' => '_wpp_api_node_resource_access',
-                'access arguments' => array('view'),
-                'args' => array(
-                    array(
-                        'name' => 'offset',
-                        'type' => 'int',
-                        'description' => 'Number of the offset',
-                        'source' => array('param' => 'offset'),
-                        'optional' => TRUE,
-                        'default' => '0',
+                'index' => array(
+                    'help' => 'List floors',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
                     ),
-                    array(
-                        'name' => 'limit',
-                        'type' => 'int',
-                        'description' => 'Length of the array',
-                        'source' => array('param' => 'limit'),
-                        'optional' => TRUE,
-                        'default' => '0',
+                    'callback' => '_wpp_api_floor_list',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'args' => array(
+                        array(
+                            'name' => 'offset',
+                            'type' => 'int',
+                            'description' => 'Number of the offset',
+                            'source' => array('param' => 'offset'),
+                            'optional' => TRUE,
+                            'default' => '0',
+                        ),
+                        array(
+                            'name' => 'limit',
+                            'type' => 'int',
+                            'description' => 'Length of the array',
+                            'source' => array('param' => 'limit'),
+                            'optional' => TRUE,
+                            'default' => '0',
+                        ),
                     ),
                 ),
             ),
@@ -217,6 +217,35 @@ function wpp_api_services_resources() {
                             'source' => array('path' => 0),
                             'type' => 'string',
                             'description' => 'The company code`',
+                        ),
+                    ),
+                ),
+                'index' => array(
+                    'help' => 'List companies',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
+                    ),
+                    'callback' => '_wpp_api_company_list',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'args' => array(
+                        array(
+                            'name' => 'offset',
+                            'type' => 'int',
+                            'description' => 'Number of the offset',
+                            'source' => array('param' => 'offset'),
+                            'optional' => TRUE,
+                            'default' => 0,
+                        ),
+                        array(
+                            'name' => 'limit',
+                            'type' => 'int',
+                            'description' => 'Length of the array',
+                            'source' => array('param' => 'limit'),
+                            'optional' => TRUE,
+                            'default' => 0,
                         ),
                     ),
                 ),
@@ -245,33 +274,33 @@ function wpp_api_services_resources() {
                         ),
                     ),
                 ),
-            ),
-            'index' => array(
-                'help' => 'List deals',
-                'file' => array(
-                    'type' => 'inc',
-                    'module' => 'wpp_api',
-                    'name' => 'wpp_api'
-                ),
-                'callback' => '_wpp_api_deal_list',
-                'access callback' => '_wpp_api_node_resource_access',
-                'access arguments' => array('view'),
-                'args' => array(
-                    array(
-                        'name' => 'offset',
-                        'type' => 'int',
-                        'description' => 'Number of the offset',
-                        'source' => array('param' => 'offset'),
-                        'optional' => TRUE,
-                        'default' => '0',
+                'index' => array(
+                    'help' => 'List deals',
+                    'file' => array(
+                        'type' => 'inc',
+                        'module' => 'wpp_api',
+                        'name' => 'wpp_api'
                     ),
-                    array(
-                        'name' => 'limit',
-                        'type' => 'int',
-                        'description' => 'Length of the array',
-                        'source' => array('param' => 'limit'),
-                        'optional' => TRUE,
-                        'default' => '0',
+                    'callback' => '_wpp_api_deal_list',
+                    'access callback' => '_wpp_api_node_resource_access',
+                    'access arguments' => array('view'),
+                    'args' => array(
+                        array(
+                            'name' => 'offset',
+                            'type' => 'int',
+                            'description' => 'Number of the offset',
+                            'source' => array('param' => 'offset'),
+                            'optional' => TRUE,
+                            'default' => '0',
+                        ),
+                        array(
+                            'name' => 'limit',
+                            'type' => 'int',
+                            'description' => 'Length of the array',
+                            'source' => array('param' => 'limit'),
+                            'optional' => TRUE,
+                            'default' => '0',
+                        ),
                     ),
                 ),
             ),
