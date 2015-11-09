@@ -56,7 +56,7 @@ namespace :deploy do
     end
   end
 
-  before "deploy:check:linked_files", "deploy:upload_setting"
+  # before "deploy:check:linked_files", "deploy:upload_setting"
 
   task :rename_setting do
     on roles(:app) do
@@ -65,7 +65,7 @@ namespace :deploy do
     end
   end
 
-  after :upload_setting, :rename_setting
+  # after :upload_setting, :rename_setting
 
   # before :updated, deploy:set_permissions:acl
 
