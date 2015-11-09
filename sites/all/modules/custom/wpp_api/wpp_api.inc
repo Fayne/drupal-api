@@ -146,23 +146,21 @@ function _wpp_api_output_gallery($gallery) {
 
     $galleryAPI->id = (int) $gallery->nid;
     $galleryAPI->titleEN = $gallery->title;
-    $galleryAPI->titleCN = isset($gallery->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
+    $galleryAPI->titleCN = _wpp_api_get_field_value($gallery, 'field_title_chinese');
+    $galleryAPI->subTitleEN = _wpp_api_get_field_value($gallery, 'field_subtitle');
+    $galleryAPI->subTitleCN = _wpp_api_get_field_value($gallery, 'field_subtitle_chinese');
+    $galleryAPI->descriptionEN = _wpp_api_get_field_value($gallery, 'body');
+    $galleryAPI->descriptionCN = _wpp_api_get_field_value($gallery, 'field_description_chinese');
+    $galleryAPI->type = _wpp_api_get_field_value($gallery, 'field_type', 'tid', 'term');
+    $galleryAPI->thumbnail = _wpp_api_get_field_value($gallery, 'field_image', 'uri', 'url');
+    $galleryAPI->cover = _wpp_api_get_field_value($gallery, 'field_cover', 'uri', 'url');
 
-    $galleryAPI->subTitleEN = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->subTitleCN = isset($gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value'] : '';
-
-    $galleryAPI->descriptionEN = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->descriptionCN = $gallery->field_description_chinese[LANGUAGE_NONE][0]['value'] ?: '';
-    $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
-    $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
-    $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
-
-    if ($video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '') {
+    if ($video = _wpp_api_get_field_value($gallery, 'field_video', 'uri', 'url')) {
         $galleryAPI->video = $video;
     }
 
-    $galleryAPI->publishedAt = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
-    $galleryAPI->updateAt = date(DATE_ISO8601, $gallery->changed);
+    $galleryAPI->publishedAt = _wpp_api_get_field_value($gallery, 'field_published');
+    $galleryAPI->updatedAt = date(DATE_ISO8601, $gallery->changed);
 
     return $galleryAPI;
 }
@@ -181,25 +179,25 @@ function _wpp_api_output_gallery_list($galleryList = array(), $detail = 'false')
 
         $galleryAPI->id = (int) $gallery->nid;
         $galleryAPI->titleEN = $gallery->title;
-        $galleryAPI->titleCN = isset($gallery->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
-        $galleryAPI->subTitleEN = isset($gallery->field_subtitle[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle[LANGUAGE_NONE][0]['value'] : '';
-        $galleryAPI->subTitleCN = isset($gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value']) ? $gallery->field_subtitle_chinese[LANGUAGE_NONE][0]['value'] : '';
+        $galleryAPI->titleCN = _wpp_api_get_field_value($gallery, 'field_title_chinese');
+        $galleryAPI->subTitleEN = _wpp_api_get_field_value($gallery, 'field_subtitle');
+        $galleryAPI->subTitleCN = _wpp_api_get_field_value($gallery, 'field_subtitle_chinese');
 
         if ($detail === 'true') {
-            $galleryAPI->descriptionEN = isset($gallery->body[LANGUAGE_NONE][0]['value']) ? $gallery->body[LANGUAGE_NONE][0]['value'] : '';
-            $galleryAPI->descriptionCN = $gallery->field_description_chinese[LANGUAGE_NONE][0]['value'] ?: '';
+            $galleryAPI->descriptionEN = _wpp_api_get_field_value($gallery, 'body');
+            $galleryAPI->descriptionCN = _wpp_api_get_field_value($gallery, 'field_description_chinese');
         }
 
-        $galleryAPI->type = isset($gallery->field_type[LANGUAGE_NONE][0]['tid']) ? _get_term_name_by_id($gallery->field_type[LANGUAGE_NONE][0]['tid']) : '';
-        $galleryAPI->thumbnail = isset($gallery->field_image[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_image[LANGUAGE_NONE][0]['uri']) : '';
-        $galleryAPI->cover = isset($gallery->field_cover[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_cover[LANGUAGE_NONE][0]['uri']) : '';
+        $galleryAPI->type = _wpp_api_get_field_value($gallery, 'field_type', 'tid', 'term');
+        $galleryAPI->thumbnail =_wpp_api_get_field_value($gallery, 'field_image', 'uri', 'url');
+        $galleryAPI->cover = _wpp_api_get_field_value($gallery, 'field_cover', 'uri', 'url');
 
-        if ($video = isset($gallery->field_video[LANGUAGE_NONE][0]['uri']) ? file_create_url($gallery->field_video[LANGUAGE_NONE][0]['uri']) : '') {
+        if ($video = _wpp_api_get_field_value($gallery, 'field_video', 'uri', 'url')) {
             $galleryAPI->video = $video;
         }
 
-        $galleryAPI->publishedAt = isset($gallery->field_published[LANGUAGE_NONE][0]['value']) ? $gallery->field_published[LANGUAGE_NONE][0]['value'] : '';
-        $galleryAPI->updateAt = date(DATE_ISO8601, $gallery->changed);
+        $galleryAPI->publishedAt = _wpp_api_get_field_value($gallery, 'field_published');
+        $galleryAPI->updatedAt = date(DATE_ISO8601, $gallery->changed);
 
         array_push($galleryListAPI, $galleryAPI);
     }
@@ -219,14 +217,14 @@ function _wpp_api_output_beacon_list($beaconList = array()) {
     foreach ($beaconList as $beacon) {
         $beaconAPI = new stdClass();
 
-        $beaconAPI->uuid = $beacon->field_uuid[LANGUAGE_NONE][0]['value'];
+        $beaconAPI->uuid = _wpp_api_get_field_value($beacon, 'field_uuid');
         $beaconAPI->name = $beacon->title;
         $beaconAPI->major = (int) $beacon->field_major[LANGUAGE_NONE][0]['value'];
         $beaconAPI->minor = (int) $beacon->field_minor[LANGUAGE_NONE][0]['value'];
-        $beaconAPI->distance = isset($beacon->field_distance[LANGUAGE_NONE][0]['value']) ? (int) $beacon->field_distance[LANGUAGE_NONE][0]['value'] : '';
+        $beaconAPI->distance = _wpp_api_get_field_value($beacon, 'field_distance');
 
         // check whether it has reference content
-        if ($contentId = isset($beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id']) ? $beacon->field_beacon_content[LANGUAGE_NONE][0]['target_id'] : '') {
+        if ($contentId = _wpp_api_get_field_value($beacon, 'field_beacon_content', 'target_id')) {
             global $base_url;
 
             // get the current endpoint path
@@ -250,7 +248,7 @@ function _wpp_api_output_beacon_list($beaconList = array()) {
             );
         }
 
-        $beaconAPI->updateAt = date(DATE_ISO8601, $beacon->changed);
+        $beaconAPI->updatedAt = date(DATE_ISO8601, $beacon->changed);
 
         array_push($beaconListAPI, $beaconAPI);
     }
@@ -295,13 +293,13 @@ function _wpp_api_floor_retrieve($floorNumber) {
         $floor = node_load($floorNid);
 
         $floorAPI->title = $floor->title;
-        $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
-        $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
-        $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
-        $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
-        $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
-        $floorAPI->addressEN = $floor->field_floor_address_english[LANGUAGE_NONE][0]['value'];
-        $floorAPI->addressCN = $floor->field_floor_address_chinese[LANGUAGE_NONE][0]['value'];
+        $floorAPI->floorNumber = _wpp_api_get_field_value($floor, 'field_floor_number');
+        $floorAPI->color = _wpp_api_get_field_value($floor, 'field_floor_color');
+        $floorAPI->introductionEN = _wpp_api_get_field_value($floor, 'field_floor_introduction_english');
+        $floorAPI->introductionCN = _wpp_api_get_field_value($floor, 'field_floor_introduction_chinese');
+        $floorAPI->contactNumber = _wpp_api_get_field_value($floor, 'field_floor_contact_number');
+        $floorAPI->addressEN = _wpp_api_get_field_value($floor, 'field_floor_address_english');
+        $floorAPI->addressCN = _wpp_api_get_field_value($floor, 'field_floor_address_chinese');
 
         $sliders = array();
         if (isset($floor->field_floor_slider_image_1[LANGUAGE_NONE][0]['uri'])) {
@@ -361,14 +359,14 @@ function _wpp_api_output_company($companyCode = '') {
         $company = node_load($companyNid);
 
         $companyAPI->titleEN = $company->title;
-        $companyAPI->titleCN = $company->field_company_title_chinese[LANGUAGE_NONE][0]['value'];
-        $companyAPI->floorNumber = $company->field_floor_number_reference[LANGUAGE_NONE][0]['value'];
-        $companyAPI->companyCode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
-        $companyAPI->introductionEN = $company->field_company_intro_english[LANGUAGE_NONE][0]['value'];
-        $companyAPI->introductionCN = $company->field_company_intro_chinese[LANGUAGE_NONE][0]['value'];
-        $companyAPI->contactNumber = $company->field_company_contact_number[LANGUAGE_NONE][0]['value'];
-        $companyAPI->addressEN = $company->field_company_address_english[LANGUAGE_NONE][0]['value'];
-        $companyAPI->addressCN = $company->field_company_address_chinese[LANGUAGE_NONE][0]['value'];
+        $companyAPI->titleCN = _wpp_api_get_field_value($company, 'field_company_title_chinese');
+        $companyAPI->floorNumber = (int) _wpp_api_get_field_value($company, 'field_floor_number_reference');
+        $companyAPI->companyCode = _wpp_api_get_field_value($company, 'field_company_code');
+        $companyAPI->introductionEN = _wpp_api_get_field_value($company, 'field_company_intro_english');
+        $companyAPI->introductionCN = _wpp_api_get_field_value($company, 'field_company_intro_chinese');
+        $companyAPI->contactNumber = _wpp_api_get_field_value($company, 'field_company_contact_number');
+        $companyAPI->addressEN = _wpp_api_get_field_value($company, 'field_company_address_english');
+        $companyAPI->addressCN = _wpp_api_get_field_value($company, 'field_company_address_chinese');
 
         $sliders = array();
         if (isset($company->field_company_slider_image_1[LANGUAGE_NONE][0]['uri'])) {
@@ -391,6 +389,7 @@ function _wpp_api_output_company($companyCode = '') {
  * Get company list.
  *
  * @param array $companyList
+ *
  * @return array
  */
 function _wpp_api_output_company_list ($companyList = array()) {
@@ -400,12 +399,12 @@ function _wpp_api_output_company_list ($companyList = array()) {
         $companyAPI = new stdClass();
 
         $companyAPI->titleEN = $company->title;
-        $companyAPI->titleCN = $company->field_company_title_chinese[LANGUAGE_NONE][0]['value'];
-        $companyAPI->floorNumber = (int) $company->field_floor_number_reference[LANGUAGE_NONE][0]['value'];
-        $companyAPI->companyCode = $company->field_company_code[LANGUAGE_NONE][0]['value'];
-        $companyAPI->contactNumber = $company->field_company_contact_number[LANGUAGE_NONE][0]['value'];
-        $companyAPI->addressEN = $company->field_company_address_english[LANGUAGE_NONE][0]['value'];
-        $companyAPI->addressCN = $company->field_company_address_chinese[LANGUAGE_NONE][0]['value'];
+        $companyAPI->titleCN = _wpp_api_get_field_value($company, 'field_company_title_chinese');
+        $companyAPI->floorNumber = (int) _wpp_api_get_field_value($company, 'field_floor_number_reference');
+        $companyAPI->companyCode = _wpp_api_get_field_value($company, 'field_company_code');
+        $companyAPI->contactNumber = _wpp_api_get_field_value($company, 'field_company_contact_number');
+        $companyAPI->addressEN = _wpp_api_get_field_value($company, 'field_company_address_english');
+        $companyAPI->addressCN = _wpp_api_get_field_value($company, 'field_company_address_chinese');
 
         array_push($companyListAPI, $companyAPI);
     }
@@ -426,8 +425,8 @@ function _wpp_api_output_floor_list ($floorList = array()) {
         $floorAPI = new stdClass();
 
         $floorAPI->title = $floor->title;
-        $floorAPI->floorNumber = $floor->field_floor_number[LANGUAGE_NONE][0]['value'];
-        $floorAPI->color = $floor->field_floor_color[LANGUAGE_NONE][0]['value'];
+        $floorAPI->floorNumber = _wpp_api_get_field_value($floor, 'field_floor_number');
+        $floorAPI->color = _wpp_api_get_field_value($floor, 'field_floor_color');
         // $floorAPI->introductionEN = $floor->field_floor_introduction_english[LANGUAGE_NONE][0]['value'];
         // $floorAPI->introductionCN = $floor->field_floor_introduction_chinese[LANGUAGE_NONE][0]['value'];
         // $floorAPI->contactNumber = $floor->field_floor_contact_number[LANGUAGE_NONE][0]['value'];
@@ -478,9 +477,9 @@ function _wpp_api_output_deal($deal) {
 
     $dealAPI->id = (int) $deal->nid;
     $dealAPI->shopNameEN = $deal->title;
-    $dealAPI->shopNameCN = isset($deal->field_title_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_title_chinese[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->shopDescriptionEN = isset($deal->field_shop_description_english[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_english[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->shopDescriptionCN = isset($deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_description_chinese[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->shopNameCN = _wpp_api_get_field_value($deal, 'field_title_chinese');
+    $dealAPI->shopDescriptionEN = _wpp_api_get_field_value($deal, 'field_shop_description_english');
+    $dealAPI->shopDescriptionCN = _wpp_api_get_field_value($deal, 'field_shop_description_chinese');
 
     if ($deal->field_latitude && $deal->field_longitude) {
         $dealAPI->coordinates = (object) [
@@ -490,16 +489,16 @@ function _wpp_api_output_deal($deal) {
     } else {
         $dealAPI->coordinates = (object) ["latitude" => "", "longitude" => ""];
     }
-    $dealAPI->addressEN = isset($deal->field_address[LANGUAGE_NONE][0]['value']) ? $deal->field_address[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->addressCN = isset($deal->field_address_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_address_chinese[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->addressEN = _wpp_api_get_field_value($deal, 'field_address');
+    $dealAPI->addressCN = _wpp_api_get_field_value($deal, 'field_address_chinese');
     
     $dealAPI->categoriesEN = isset($deal->field_category[LANGUAGE_NONE]) ? _array_flatten($deal->field_category[LANGUAGE_NONE]) : [];
     $dealAPI->categoriesCN = isset($deal->field_category_chinese[LANGUAGE_NONE]) ? _array_flatten($deal->field_category_chinese[LANGUAGE_NONE]) : [];
-    $dealAPI->averageSpendEN = isset($deal->field_average_spend[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->averageSpendCN = isset($deal->field_average_spend_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_average_spend_chinese[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->hasDeal = isset($deal->field_has_deal[LANGUAGE_NONE][0]['value']) ? (int) $deal->field_has_deal[LANGUAGE_NONE][0]['value'] : 0;
-    $dealAPI->detailsEN = isset($deal->field_details[LANGUAGE_NONE][0]['value']) ? $deal->field_details[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->detailsCN = isset($deal->field_details_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_details_chinese[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->averageSpendEN = _wpp_api_get_field_value($deal, 'field_average_spend');
+    $dealAPI->averageSpendCN = _wpp_api_get_field_value($deal, 'field_average_spend_chinese');
+    $dealAPI->hasDeal = _wpp_api_get_field_value($deal, 'field_has_deal', 'value', '', 0);
+    $dealAPI->detailsEN = _wpp_api_get_field_value($deal, 'field_details');
+    $dealAPI->detailsCN = _wpp_api_get_field_value($deal, 'field_details_chinese');
 
     $shopPictures = array();
     if ($deal->field_shop_pictures_1 && $deal->field_shop_pictures_1[LANGUAGE_NONE][0]['uri']) {
@@ -513,9 +512,9 @@ function _wpp_api_output_deal($deal) {
     }
 
     $dealAPI->shopPictures = $shopPictures;
-    $dealAPI->shopTagEN = isset($deal->field_shop_tag[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_tag[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->shopTagCN = isset($deal->field_shop_tag_chinese[LANGUAGE_NONE][0]['value']) ? $deal->field_shop_tag_chinese[LANGUAGE_NONE][0]['value'] : '';
-    $dealAPI->telephone = isset($deal->field_telephone[LANGUAGE_NONE][0]['value']) ? $deal->field_telephone[LANGUAGE_NONE][0]['value'] : '';
+    $dealAPI->shopTagEN = _wpp_api_get_field_value($deal, 'field_shop_tag');
+    $dealAPI->shopTagCN = _wpp_api_get_field_value($deal, 'field_shop_tag_chinese');
+    $dealAPI->telephone = _wpp_api_get_field_value($deal, 'field_telephone');
 
     return $dealAPI;
 }
@@ -616,7 +615,7 @@ function wpp_api_mail_tokens(&$replacements, $data, $options) {
  * array flatten
  *
  * @param $array
- * 
+ *
  * @return array
  */
 function _array_flatten($array) {
@@ -627,4 +626,39 @@ function _array_flatten($array) {
     });
 
     return $return;
+}
+
+/**
+ * Get custom field value
+ *
+ * @param $model
+ * @param $fieldName
+ * @param string $valueName
+ * @param string $type
+ * @param string $default
+ *
+ * @return string
+ */
+function _wpp_api_get_field_value($model, $fieldName, $valueName = 'value', $type = '', $default = '') {
+
+    $valueArr = $model->$fieldName;
+
+    if (isset($valueArr[LANGUAGE_NONE][0][$valueName])) {
+
+        switch ($type) {
+            case 'term':
+
+                return _get_term_name_by_id($valueArr[LANGUAGE_NONE][0][$valueName]);
+
+            case 'url':
+
+                return file_create_url($valueArr[LANGUAGE_NONE][0][$valueName]);
+
+            default:
+
+                return $valueArr[LANGUAGE_NONE][0][$valueName];
+        }
+    }
+
+    return $default;
 }
